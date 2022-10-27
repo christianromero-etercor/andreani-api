@@ -2,7 +2,7 @@
 document.querySelector('#numeroAndreaniForm').addEventListener('submit', getnumeroAndreaniInfo);
 infonumeroAndreani.classList.remove("display");
 
-// hiding loading 
+// hiding loading
 function hideLoading() {
     loader.classList.remove("display");
     cargando.classList.remove("display");
@@ -13,7 +13,7 @@ const token = fetch("https://apis.andreani.com/login", {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': 'Basic ' + btoa('solnik_gla:b3kk0At9J5Lup1F'),
+    'Authorization': 'basic c29sbmlrX2dsYTpiM2trMEF0OUo1THVwMUY=',
   },
 })
 .then(response => response.json())
