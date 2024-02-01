@@ -2,9 +2,10 @@ html, body, .wrap {
   background: #f0f0f1;
 }
 
-.container{
+.container {
   max-width: 1140px;
-  width: 100%
+  width: 100%;
+  margin-top: 20px !important;
 }
 
 .icon-check,.icon-remove {
@@ -22,7 +23,6 @@ html, body, .wrap {
   transition: all 0.5s ease-out !important;
   cursor: pointer;
   min-width: 200px;
-
 }
 
 .boton-buscador:hover {
@@ -244,6 +244,9 @@ table {
 
 
 @media (max-width: 640px) {
+  .container {
+    margin-top: 0px !important;
+  }
   .col-2 {
       width: 22% !important;
       font-size: 0.75rem !important;
