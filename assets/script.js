@@ -2,7 +2,7 @@
 document.querySelector('#numeroAndreaniForm').addEventListener('submit', getnumeroAndreaniInfo);
 infonumeroAndreani.classList.remove("display");
 
-// hiding loading 
+// hiding loading
 function hideLoading() {
     loader.classList.remove("display");
     cargando.classList.remove("display");
@@ -41,7 +41,7 @@ function getnumeroAndreaniInfo(e) {
 }
 };
 
-  fetch (`https://apidestinatarios.andreani.com/api/envios/${numeroAndreani}`, options)
+  fetch (`https://apidestinatarios.andreani.com/api/envios/${numeroAndreani}/trazas`, options)
   .then(response => {
     return response.json();
   })
@@ -51,36 +51,49 @@ function getnumeroAndreaniInfo(e) {
 
     // Exibe información del envío
     let infonumeroAndreani = "";
-    if(typeof data.codigoDeEnvioInterno == 'undefined') {
+    if (data.code === "404") {
       exibeIcone("remove");
       infonumeroAndreani = `
       <div class="alert alert-info alert-dismissible fade show" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      Número de envío inexistente.
+      <div>El número ingresado es inexistente</div>
     </div>
       `;
+
     } else {
+
       exibeIcone("check");
-      infonumeroAndreani += `
-      <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+
+      infonumeroAndreani +=`<div class="alert alert-secondary alert-dismissible fade show" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="alert-heading">${data.estado}</h4>
-      <hr>
-      <p class="m-0"><strong>N° de envío: </strong>${data.codigoDeEnvioInterno}</p>
-      <p class="m-0"><strong>Fecha de alta: </strong>${data.fechaDeAlta}</p>
-      <p class="m-0"><strong>Remitente: </strong>${data.remitente}</p>
-      <p class="m-0"><strong>Servicio: </strong>${data.servicio}</p>
-      <p class="m-0"><strong>Sucursal de destino: </strong>${data.codigoSucursalDistribucion} - ${data.nombreSucursalDistribucion}</p>
-      </div>
-      `;
-    }
+      <table class="label-data" border="1" style="background-color: #d71921;color: white;height: 35px;">
+      <tbody><tr>
+      <td class="col-2">Fecha/Hora</td>
+      <td class="col-4">Estado del pedido</td>
+      <td class="col-3">Evento</td>
+      <td class="col-3">Sucursal</td>
+      </tr>
+      </tbody></table>`;
 
-    // Insere a template no DOM
+      for (var i = 0; i < data.length; i++) {
+        infonumeroAndreani +=`
+
+        <table border="1">
+        <tr>
+        <td class="col-2">${data[i].fecha.dia} ${data[i].fecha.hora}</td>
+        <td class="col-4">${data[i].estado}</td>
+        <td class="col-3">${data[i].evento}</td>
+        <td class="col-3">${data[i].sucursal}</td>
+        </tr>
+        </table>`;
+      }
+          // Insere a template no DOM
     document.querySelector("#infonumeroAndreani").innerHTML = infonumeroAndreani;
+    }
   })
   .finally(()=>{
     $loader.style.display = 'none';
