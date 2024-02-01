@@ -263,11 +263,11 @@ table {
       padding-left: 5px;
   }
   .alert.alert-secondary.alert-dismissible.fade.show {
-      margin: 0px 10px 0px 10px !important;
-      padding: 5px !important;
-      padding-top: 20px !important;
-      margin-bottom: 20px !important;
-      margin-top: -20px !important;
+    margin: 0px 5px 0px 5px !important;
+    padding: 2px !important;
+    padding-top: 20px !important;
+    margin-bottom: 20px !important;
+    margin-top: -20px !important;
   }
   tr td {
       max-height: 300px !important;
