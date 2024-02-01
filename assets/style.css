@@ -113,6 +113,7 @@ h4.alert-heading:before {
   font-weight: 600;
   padding-right: 7px;
   vertical-align: text-bottom;
+  visibility: visible;
 }
 
 button.close {
@@ -187,4 +188,56 @@ input#numeroAndreani {
 input#fechaDesde {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+h4.alert-heading.undefined {
+  display: none;
+}
+
+h4.alert-heading.Entregado, h4.alert-heading.En.transito {
+  visibility: hidden;
+}
+
+h4.alert-heading.Entregado:after, h4.alert-heading.En.transito:after {
+  content: "Entregado";
+  visibility: visible;
+  display: block;
+  margin-bottom: 20px;
+  left: 0;
+  margin-left: -100px;
+}
+
+
+h4.alert-heading.Entregado, h4.alert-heading.En.transito {
+  visibility: hidden;
+  display: flex;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-color: #96999c80;
+}
+
+.alert.alert-secondary.alert-dismissible.fade.show {
+  box-shadow: 5px 5px 50px #3e454b63;
+}
+
+.alert {
+  display: block !important;
+}
+
+tr td {
+    max-height: 300px !important;
+    min-height: 200px !important;
+    height: 90px;
+}
+
+table.label-data tr td {
+    height: 50px !important;
+}
+
+table {
+    zoom: 90%;
+    font-weight: 400;
 }
