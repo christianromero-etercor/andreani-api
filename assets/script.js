@@ -13,7 +13,7 @@ const token = fetch("https://apis.andreani.com/login", {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': 'Basic ' + btoa('solnik_gla:b3kk0At9J5Lup1F'),
+    'Authorization': 'Basic ' + btoa('xxxxxx_gla:b3kk0At9J5Lup1F'),
   },
 })
 .then(response => response.json())
