@@ -241,3 +241,41 @@ table {
     zoom: 90%;
     font-weight: 400;
 }
+
+
+@media (max-width: 640px) {
+  .col-2 {
+      width: 22% !important;
+      font-size: 0.75rem !important;
+      padding-left: 5px;
+  }
+  .col-3 {
+      max-width: 22% !important;
+      font-size: 0.7rem !important;
+      padding-left: 5px;
+  }
+  .col-4 {
+      width: 38% !important;
+      font-size: 0.75rem !important;
+      padding-left: 5px;
+  }
+  .alert.alert-secondary.alert-dismissible.fade.show {
+      margin: 0px 10px 0px 10px !important;
+      padding: 5px !important;
+      padding-top: 20px !important;
+      margin-bottom: 20px !important;
+      margin-top: -20px !important;
+  }
+  tr td {
+      max-height: 300px !important;
+      min-height: 200px !important;
+      height: 90px;
+      box-sizing: initial;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      text-overflow: ellipsis;
+      overflow-y: scroll;
+  }
+}
+
+
