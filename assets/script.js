@@ -2,7 +2,7 @@
 document.querySelector('#numeroAndreaniForm').addEventListener('submit', getnumeroAndreaniInfo);
 infonumeroAndreani.classList.remove("display");
 
-// hiding loading
+// hiding loading 
 function hideLoading() {
     loader.classList.remove("display");
     cargando.classList.remove("display");
@@ -13,7 +13,7 @@ const token = fetch("https://apis.andreani.com/login", {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'Authorization': 'basic c29sbmlrX2dsYTpiM2trMEF0OUo1THVwMUY=',
+    'Authorization': 'Basic ' + btoa('solnik_gla:b3kk0At9J5Lup1F'),
   },
 })
 .then(response => response.json())
@@ -34,35 +34,26 @@ function getnumeroAndreaniInfo(e) {
   const $infonumeroAndreani = document.getElementById("infonumeroAndreani");
   $infonumeroAndreani.style.display = 'none'
 
- var createCORSRequest = function(method, url) {
-  var xhr = new XMLHttpRequest();
-  if ("withCredentials" in xhr) {
-    // Most browsers.
-    xhr.open(method, url, true);
-  } else if (typeof XDomainRequest != "undefined") {
-    // IE8 & IE9
-    xhr = new XDomainRequest();
-    xhr.open(method, url);
-  } else {
-    // CORS not supported.
-    xhr = null;
-  }
-  return xhr;
+  var options = {
+  method: 'GET',
+  headers: {
+    'x-authorization-token': sessionStorage.getItem('x-authorization-token'),
+}
 };
 
-var url = 'https://apis.andreani.com/v2/envios/360000562978380/trazas';
-var method = 'GET';
-var xhr = createCORSRequest(method, url, infonumeroAndreani);
-
-xhr.onload = function() {
-  const $infonumeroAndreani = document.getElementById("infonumeroAndreani");
+  fetch (`https://apidestinatarios.andreani.com/api/envios/${numeroAndreani}`, options)
+  .then(response => {
+    return response.json();
+  })
+  .then (data => {
+    const $infonumeroAndreani = document.getElementById("infonumeroAndreani");
   $infonumeroAndreani.style.display = 'block'
 
     // Exibe información del envío
     let infonumeroAndreani = "";
-    if(infonumeroAndreani == 'undefined') {
+    if(typeof data.codigoDeEnvioInterno == 'undefined') {
       exibeIcone("remove");
-      infonumeroAndreani += `
+      infonumeroAndreani = `
       <div class="alert alert-info alert-dismissible fade show" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -77,30 +68,27 @@ xhr.onload = function() {
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="alert-heading">${data.Estado}</h4>
+      <h4 class="alert-heading">${data.estado}</h4>
       <hr>
-      <p class="m-0"><strong>Fecha: </strong>${data.Fecha}</p>
-      <p class="m-0"><strong>Código de estado: </strong>${data.EstadoId}</p>
-      <p class="m-0"><strong>Traducción: </strong>${data.Traduccion}</p>
-      <p class="m-0"><strong>Sucursal: </strong>${data.Sucursal}</p>
-      <p class="m-0"><strong>Ciclo: </strong>${data.Ciclo}</p>
+      <p class="m-0"><strong>N° de envío: </strong>${data.codigoDeEnvioInterno}</p>
+      <p class="m-0"><strong>Fecha de alta: </strong>${data.fechaDeAlta}</p>
+      <p class="m-0"><strong>Remitente: </strong>${data.remitente}</p>
+      <p class="m-0"><strong>Servicio: </strong>${data.servicio}</p>
+      <p class="m-0"><strong>Sucursal de destino: </strong>${data.codigoSucursalDistribucion} - ${data.nombreSucursalDistribucion}</p>
       </div>
       `;
     }
 
     // Insere a template no DOM
     document.querySelector("#infonumeroAndreani").innerHTML = infonumeroAndreani;
-};
+  })
+  .finally(()=>{
+    $loader.style.display = 'none';
+    $cargando.style.display = 'none';
+  })
 
-xhr.onerror = function() {
-  // Error code goes here.
-};
 
-xhr.withCredentials = true;
-xhr.setRequestHeader('x-authorization-token', sessionStorage.getItem('x-authorization-token'));
-xhr.send();
-
-e.preventDefault();
+  e.preventDefault();
 }
 
 // Máscara para validar entrada de datos
